@@ -60,7 +60,6 @@
                     <th class="text-center">SUB TOTAL</th>
                     <th class="text-center">DISKON (%)</th>
                     <th class="text-center">TOTAL BAYAR</th>
-                    <th class="text-center">PRE-ORDER</th>
                     <th width="13%" class="text-center">OPSI</th>
                   </tr>
                 </thead>
@@ -80,14 +79,6 @@
                       <td class="text-center"><?php echo "Rp.".number_format($d['invoice_sub_total']).",-"; ?></td>
                       <td class="text-center"><?php echo $d['invoice_diskon']; ?>%</td>
                       <td class="text-center"><?php echo "Rp.".number_format($d['invoice_total']).",-"; ?></td>
-                      <?php 
-                      if ($d['preorder']) {
-                        echo "<td class='text-center'><i class='fa fa-check text-success'></i></td>";
-                      }
-                      else {
-                        echo "<td class='text-center'><i class='fa fa-close text-danger'></i></td>";
-                      }
-                      ?>
                       <td class="text-center">    
 
                         <div class="btn-group">
@@ -297,7 +288,7 @@
                   <?php 
                   $no=1;
                   $id_kasir = $_SESSION['id'];
-                  $data = mysqli_query($koneksi,"SELECT * FROM invoice,kasir where kasir_id=invoice_kasir and invoice_kasir='$id_kasir' and preorder=TRUE order by invoice_id desc");
+                  $data = mysqli_query($koneksi,"SELECT * FROM invoice_preorder,kasir where kasir_id=invoice_kasir and invoice_kasir='$id_kasir' order by invoice_id desc");
                   while($d = mysqli_fetch_array($data)){
                     ?>
                     <tr>

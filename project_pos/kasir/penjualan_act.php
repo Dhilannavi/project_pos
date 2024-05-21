@@ -1,6 +1,7 @@
-<?php 
+<?php
 include '../koneksi.php';
 session_start();
+$nama_table = isset($_GET['preorder']) ? 'invoice_preorder' : 'invoice';
 $nomor = $_POST['nomor'];
 $tanggal = $_POST['tanggal'];
 $pelanggan = $_POST['pelanggan'];
@@ -12,7 +13,7 @@ $preorder = isset($_GET['preorder']) ? true : false;
 $no_telp = $preorder ? $_POST['no_telp'] : null;
 
 
-mysqli_query($koneksi, "insert into invoice values(NULL,'$nomor','$tanggal','$pelanggan','$kasir','$sub_total','$diskon','$total','$preorder','$no_telp')")or die(mysqli_errno($koneksi));
+mysqli_query($koneksi, "insert into $nama_table values(NULL,'$nomor','$tanggal','$pelanggan','$kasir','$sub_total','$diskon','$total','$no_telp')") or die(mysqli_errno($koneksi));
 
 $id_invoice = mysqli_insert_id($koneksi);
 
@@ -23,7 +24,7 @@ $transaksi_total = $_POST['transaksi_total'];
 
 $jumlah_pembelian = count($transaksi_produk);
 
-for($a=0;$a<$jumlah_pembelian;$a++){
+for ($a = 0; $a < $jumlah_pembelian; $a++) {
 
 	$t_produk = $transaksi_produk[$a];
 	$t_harga = $transaksi_harga[$a];
@@ -36,12 +37,12 @@ for($a=0;$a<$jumlah_pembelian;$a++){
 	$jumlah_produk = $de['produk_stok'];
 
 	// kurangi jumlah produk
-	$jp = $jumlah_produk-$t_jumlah;
-	mysqli_query($koneksi, "update produk set produk_stok='$jp' where produk_id='$t_produk'");
-
+	if (!isset($_GET['preorder'])) {
+		$jp = $jumlah_produk - $t_jumlah;
+		mysqli_query($koneksi, "update produk set produk_stok='$jp' where produk_id='$t_produk'");
+	}
 	// simpan data pembelian
-	mysqli_query($koneksi, "insert into transaksi values(NULL,'$id_invoice','$t_produk','$t_harga','$t_jumlah','$t_total')")or die(mysqli_errno($koneksi));
-
+	mysqli_query($koneksi, "insert into transaksi values(NULL,'$id_invoice','$t_produk','$t_harga','$t_jumlah','$t_total')") or die(mysqli_errno($koneksi));
 }
 
 

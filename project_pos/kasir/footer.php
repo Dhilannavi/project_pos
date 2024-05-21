@@ -531,6 +531,38 @@
         return false;
       }
     }
+
+    function setActionAndSubmit(action) {
+      // Dapatkan elemen form
+      var form = document.getElementById('formPenjualan');
+
+      // Ubah action dari form
+      form.action = action;
+      collectTableHTML();
+
+      // Submit form
+      form.submit();
+    }
+    function collectTableHTML() {
+    var tableBody = document.getElementById('table-body');
+    var form = document.getElementById('formPenjualan');
+
+    // Bersihkan input tersembunyi sebelumnya jika ada
+    var hiddenInputs = form.querySelectorAll('input[type="hidden"][name="table_html"]');
+    hiddenInputs.forEach(input => input.remove());
+
+    // Dapatkan HTML dari tbody
+    var tableHTML = tableBody.innerHTML;
+
+    // Buat input tersembunyi untuk menyimpan HTML tabel
+    var inputTableHTML = document.createElement('input');
+    inputTableHTML.type = 'hidden';
+    inputTableHTML.name = 'table_html';
+    inputTableHTML.value = tableHTML;
+    form.appendChild(inputTableHTML);
+  }
+
+
   </script>
 
   </body>

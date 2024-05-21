@@ -248,8 +248,6 @@
                     <tbody>
                       <?php 
                         echo $tbodypreorder;
-                        if ($tbodypreorder == null)
-                        echo '<tr>tabel ga ada</tr>'
                       ?>
                     </tbody>
                     <tfoot>

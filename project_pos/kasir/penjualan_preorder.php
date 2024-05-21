@@ -259,7 +259,6 @@
                         <th style="text-align: center;">Harga</th>
                         <th style="text-align: center;">Jumlah</th>
                         <th style="text-align: center;">Total</th>
-                        <th style="text-align: center;" width="1%">OPSI</th>
                       </tr>
                     </thead>
                     <tbody id="table-body">
